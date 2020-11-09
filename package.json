@@ -3,12 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node -r dotenv/config ./bin/www",
+    "create-table": "node -r dotenv/config db/scripts/create_table.js",
+    "populate-table": "node -r dotenv/config db/scripts/populate_table.js",
+    "read-table": "node -r dotenv/config db/scripts/read_table.js",
+    "models": "node -r dotenv/config db/models/quotes.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "express": "~4.16.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "pg": "^8.4.2"
   }
 }
