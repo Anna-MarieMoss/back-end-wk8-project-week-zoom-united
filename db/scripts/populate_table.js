@@ -1,5 +1,5 @@
 const { query } = require("../index");
-const mentorData=  require ("../samples_data/mentor_date")
+const mentorData = require("../samples_data/mentor_date")
 
 // const sqlStatement = `
 //     INSERT INTO quotes_table (quote) 
