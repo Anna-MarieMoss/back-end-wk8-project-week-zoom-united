@@ -1,28 +1,24 @@
 const { query } = require("../../db/index");
 const moment = require("moment");
 
-// Get all notes from table
-
-const sqlStatementAll = `SELECT * FROM mentor_notes ORDER BY
-meeting_date DESC
-`;
+/////////////// Get all notes from table
 
 async function getNotesAll() {
-  const result = await query(sqlStatementAll);
-  console.log(result.rows);
+  const result = await query(`SELECT * FROM mentor_notes ORDER BY
+  meeting_date DESC
+  `);
   return result.rows;
 }
 
-// Get all posts by user_id (order by date)
+///////////////  Get all posts by user_id
 
 async function getNotesUser(userId) {
   const result = await query(`SELECT * FROM mentor_notes WHERE user_id = ${userId} ORDER BY
   meeting_date DESC`);
-  console.log(result.rows);
   return result.rows;
 }
 
-// Get all posts from between a specified date and current date
+///////////////  Get all posts from between a specified date and current date
 
 async function getAllNotesDate(date) {
   const startDate = moment(date).format("YYYY-MM-DD");
@@ -40,7 +36,7 @@ async function getAllNotesDateRange(startDate, endDate) {
   return result.rows;
 }
 
-// Get posts for specific user_id between a specific date and now
+///////////////  Get posts for specific user_id between a specific date and now
 
 async function getUserNotesDateRange(date, userId) {
   const startDate = moment(date).format("YYYY-MM-DD");
