@@ -1,47 +1,23 @@
 const { query } = require("../index");
-const quoteData = [
-  {
-    quote:
-      "Every day may not be good but there is something good in every day!",
-  },
-  {
-    quote:
-      "When things get tough remember: better days are coming. They are called Saturday and Sunday.",
-  },
-  { quote: "Choose to be optimistic. It feels better." },
-  {
-    quote:
-      "Just in case no one told you today: Good morning! You are doing great. I believe in you. Nice butt.",
-  },
-  {
-    quote:
-      "Breathe. Don't let a bad day make you feel like you have a bad life.",
-  },
-  {
-    quote: "A good laugh and a long sleep are the two best cures for anything.",
-  },
-  { quote: "Do something today that you future self will thank you for." },
-  { quote: "Start where you are. Use what you have. Do what you can." },
-  {
-    quote:
-      "Don’t wait for your feelings to change to take the action. Take the action and your feelings will change.",
-  },
-  {
-    quote:
-      "You measure the size of the accomplishment by the obstacles you had to overcome to reach your goals.",
-  },
-];
+const mentorData = require("../samples_data/mentor_date")
+
+// const sqlStatement = `
+//     INSERT INTO quotes_table (quote) 
+//     VALUES ($1) RETURNING *;
+//     `;
 
 const sqlStatement = `
-    INSERT INTO quotes_table (quote) 
-    VALUES ($1) RETURNING *;
+    INSERT INTO mentor_notes (user_id, name, meeting_date, week_topic, summary, challenges, wins, goals, aspirations) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
     `;
+
+  
 
 async function populateTable(array) {
   for (let i = 0; i < array.length; i++) {
-    let values = [array[i].quote];
+    let values = [array[i].user_id, array[i].name, array[i].meeting_date, array[i].week_topic, array[i].summary, array[i].challenges, array[i].wins, array[i].goals, array[i].aspirations];
     const result = await query(sqlStatement, values);
     console.log(result);
   }
 }
-populateTable(quoteData);
+populateTable(mentorData);

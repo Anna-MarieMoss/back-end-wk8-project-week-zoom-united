@@ -1,6 +1,6 @@
 const { query } = require("../index");
 
-const sqlStatement = `SELECT * FROM quotes_table
+const sqlStatement = `SELECT * FROM mentor_notes
 `;
 
 async function readTableAll() {
