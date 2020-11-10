@@ -4,6 +4,7 @@ const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
 const quotesRouter = require("./routes/quotes");
+const notesRouter = require("./routes/notes");
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.use(cookieParser());
 
 app.use("/", indexRouter);
 app.use("/quotes", quotesRouter);
+app.use("/notes", notesRouter);
 
 module.exports = app;
