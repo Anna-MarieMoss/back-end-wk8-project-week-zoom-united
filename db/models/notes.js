@@ -1,4 +1,5 @@
 const { query } = require("../../db/index");
+const moment = require("moment");
 
 // Get all notes from table
 
@@ -21,39 +22,34 @@ async function getNotesUser(userId) {
   return result.rows;
 }
 
-// Get all posts from a specific date
+// Get all posts from between a specified date and current date
 
 async function getAllNotesDate(date) {
-  const result = await query(`SELECT * FROM mentor_notes WHERE meeting_date = ${date} ORDER BY
-    meeting_date DESC`);
-  console.log(result.rows);
-  return result.rows;
-}
+  const startDate = moment(date).format("YYYY-MM-DD");
+  // sets startDate with date passed into function
+  const endDate = moment().format("YYYY-MM-DD");
+  // sets endDate to now
 
-// Get all posts from a specific date range
+  return getAllNotesDateRange(startDate, endDate);
+  // returns all posts between startDate and now using the getAllNotesDateRange function
+}
 
 async function getAllNotesDateRange(startDate, endDate) {
-  const result = await query(`SELECT * FROM mentor_notes WHERE meeting_date BETWEEN ${startDate} AND ${endDate} ORDER BY
+  const result = await query(`SELECT * FROM mentor_notes WHERE meeting_date BETWEEN '${startDate}' AND '${endDate}' ORDER BY
     meeting_date DESC`);
-  console.log(result.rows);
   return result.rows;
 }
 
-// Get posts for specific user_id from a specific date
+// Get posts for specific user_id between a specific date and now
 
-async function getUserNotesDate(date, userId) {
-  const result = await query(`SELECT * FROM mentor_notes WHERE user_id = ${userId} AND meeting_date = ${date} ORDER BY
+async function getUserNotesDateRange(date, userId) {
+  const startDate = moment(date).format("YYYY-MM-DD");
+  // sets startDate with date passed into function
+  const endDate = moment().format("YYYY-MM-DD");
+
+  const result = await query(`SELECT * FROM mentor_notes WHERE user_id = ${userId} AND meeting_date BETWEEN '${startDate}' AND '${endDate}' ORDER BY
       meeting_date DESC`);
-  console.log(result.rows);
-  return result.rows;
-}
 
-// Get posts for specific user_id from a date range
-
-async function getUserNotesDateRange(startDate, endDate, userId) {
-  const result = await query(`SELECT * FROM mentor_notes WHERE user_id = ${userId} AND meeting_date BETWEEN ${startDate} AND ${endDate} ORDER BY
-      meeting_date DESC`);
-  console.log(result.rows);
   return result.rows;
 }
 
@@ -62,6 +58,5 @@ module.exports = {
   getNotesUser,
   getAllNotesDate,
   getAllNotesDateRange,
-  getUserNotesDate,
   getUserNotesDateRange,
 };
