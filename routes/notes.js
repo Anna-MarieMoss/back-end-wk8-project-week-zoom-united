@@ -7,6 +7,8 @@ const {
   getAllNotesDate,
   getAllNotesDateRange,
   getUserNotesDateRange,
+  postNewNote,
+  deleteNoteById,
 } = require("../db/models/notes");
 
 ///////// GET ALL NOTES
@@ -26,7 +28,7 @@ router.get("/", async function (req, res) {
   res.json({ payload: allNotes });
 });
 
-//// GET ALL NOTES FROM USER
+///////// GET ALL NOTES FROM USER
 
 router.get("/:id", async function (req, res) {
   // If a date is passed through in params - return all notes between date given and current date for specified user
@@ -42,6 +44,20 @@ router.get("/:id", async function (req, res) {
   const userNotes = await getNotesUser(req.params.id);
   console.log(`Success! Here's the notes for User: ${req.params.id}`);
   res.json({ payload: userNotes });
+});
+
+///////// POST NEW NOTE TO DB
+router.post("/", async function (req, res) {
+  const result = await postNewNote(req.body);
+  console.log(`Success! New note created`);
+  res.json(result);
+});
+
+///////// DELETE POST BY POST ID
+router.delete("/:id", async function (req, res) {
+  const result = await deleteNoteById(req.params.id);
+  console.log(`Success! Note ${req.params.id} deleted`);
+  res.json(result);
 });
 
 module.exports = router;

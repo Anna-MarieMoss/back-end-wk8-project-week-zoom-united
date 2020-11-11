@@ -49,10 +49,52 @@ async function getUserNotesDateRange(date, userId) {
   return result.rows;
 }
 
+/////////////// Post new note into database
+
+const sqlStatementPost = `
+    INSERT INTO mentor_notes (user_id, name, meeting_date, week_topic, summary, challenges, wins, goals, aspirations) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
+    `;
+
+async function postNewNote({
+  user_id,
+  name,
+  meeting_date,
+  week_topic,
+  summary,
+  challenges,
+  wins,
+  goals,
+  aspirations,
+}) {
+  let values = [
+    user_id,
+    name,
+    meeting_date,
+    week_topic,
+    summary,
+    challenges,
+    wins,
+    goals,
+    aspirations,
+  ];
+  const result = await query(sqlStatementPost, values);
+  console.log(result);
+}
+
+//////////// Delete note by ID
+
+async function deleteNoteById(id) {
+  const result = await query(`DELETE FROM mentor_notes WHERE id = ${id}`);
+  console.log(result);
+}
+
 module.exports = {
   getNotesAll,
   getNotesUser,
   getAllNotesDate,
   getAllNotesDateRange,
   getUserNotesDateRange,
+  postNewNote,
+  deleteNoteById,
 };
