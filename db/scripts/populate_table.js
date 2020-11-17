@@ -28,4 +28,4 @@ async function populateTable(array) {
     console.log(result);
   }
 }
-populateTable(mentorData2);
+populateTable(mentorData);
